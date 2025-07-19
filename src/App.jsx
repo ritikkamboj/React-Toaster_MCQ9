@@ -1,17 +1,32 @@
+import { useState } from 'react'
 import './App.css'
 
 function App() {
+  const [visible , setVisible] = useState(false);
+
+  function handleClick()
+  {
+    setVisible(true)
+    setTimeout(()=> handleClose() , 5000)
+  }
+
+  function handleClose()
+  {
+    setVisible(false)
+  }
 
   return (
     <div className='container'>
-      <div className='toast-container'>
+     {
+      visible &&  <div className='toast-container'>
         <div className='toast'>
-          Success Toast <span>X</span>
+          Success Toast <span onClick={() => handleClose()}>X</span>
         </div>
       </div>
+     }
       <h1>React Toaster App</h1>
       <div className='btn-container'>
-        <button>Success Toast</button>
+        <button onClick={() => handleClick()}>Success Toast</button>
         <button>Info Toast</button>
         <button>Warning Toast</button>
         <button>Error Toast</button>
