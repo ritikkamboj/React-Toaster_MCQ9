@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import './App.css'
 
 function App() {
   // const [visible , setVisible] = useState(false);
   const [list, setList] = useState([]);
+  const timeRef = useRef({})
 
   function handleClick(message, type) {
     const id = new Date().getTime();
     const newToast = [...list, { id, message, type }]
     setList(newToast);
-    setTimeout(()=> handleClose(id),5000)
+    timeRef.current[id] = setTimeout(() => handleClose(id), 5000)
+
 
     // setVisible(true)
     // setTimeout(()=> handleClose() , 5000)
@@ -19,7 +21,10 @@ function App() {
 
   function handleClose(id) {
     // let filArr = list.filter((data)=> data.id !==id);
-  setList(prevList => prevList.filter(data => data.id !== id));
+    if (timeRef.current[id])
+      clearTimeout((timeRef.current[id]))
+    delete timeRef.current[id]
+    setList(prevList => prevList.filter(data => data.id !== id));
   }
 
   return (
@@ -27,22 +32,22 @@ function App() {
 
       <div className='toast-container'>
         {
-          list.map((data)=> {
-            return    <div key={data.id} className={`toast ${data.type}`}>
-        {data.message} <span onClick={() => handleClose(data.id)}>X</span>
-        </div>
+          list.map((data) => {
+            return <div key={data.id} className={`toast ${data.type}`}>
+              {data.message} <span onClick={() => handleClose(data.id)}>X</span>
+            </div>
           })
         }
-     
+
       </div>
 
 
       <h1>React Toaster App</h1>
       <div className='btn-container'>
-        <button onClick={() => handleClick("Success" , 'success')}>Success Toast</button>
-        <button onClick={() => handleClick("Info" , 'info')}>Info Toast</button>
-        <button onClick={() => handleClick("Warning" , 'warning')}>Warning Toast</button>
-        <button onClick={() => handleClick("Error" , 'error')}>Error Toast</button>
+        <button onClick={() => handleClick("Success", 'success')}>Success Toast</button>
+        <button onClick={() => handleClick("Info", 'info')}>Info Toast</button>
+        <button onClick={() => handleClick("Warning", 'warning')}>Warning Toast</button>
+        <button onClick={() => handleClick("Error", 'error')}>Error Toast</button>
 
       </div>
 
