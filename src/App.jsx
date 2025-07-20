@@ -16,8 +16,9 @@ function App() {
 
   }
 
-  function handleClose() {
-    setVisible(false)
+  function handleClose(id) {
+    let filArr = list.filter((data)=> data.id !==id);
+    setList(filArr);
   }
 
   return (
@@ -27,7 +28,7 @@ function App() {
         {
           list.map((data)=> {
             return    <div key={data.id} className={`toast ${data.type}`}>
-        {data.message} <span onClick={() => handleClose("Success", 'success')}>X</span>
+        {data.message} <span onClick={() => handleClose(data.id)}>X</span>
         </div>
           })
         }
