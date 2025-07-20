@@ -9,6 +9,7 @@ function App() {
     const id = new Date().getTime();
     const newToast = [...list, { id, message, type }]
     setList(newToast);
+    setTimeout(()=> handleClose(id),5000)
 
     // setVisible(true)
     // setTimeout(()=> handleClose() , 5000)
@@ -17,8 +18,8 @@ function App() {
   }
 
   function handleClose(id) {
-    let filArr = list.filter((data)=> data.id !==id);
-    setList(filArr);
+    // let filArr = list.filter((data)=> data.id !==id);
+  setList(prevList => prevList.filter(data => data.id !== id));
   }
 
   return (
