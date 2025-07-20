@@ -21,12 +21,26 @@
   text-align: left;
   position: relative;
   animation: slide 1s 1;
+  margin: 5px;
 
   span {
     position: absolute;
     right: 20px;
     cursor: pointer;
   }
+}
+
+.success {
+  background-color: green;
+}
+.error {
+  background-color: red;
+}
+.warning {
+  background-color: orange;
+}
+.info {
+  background-color: blue;
 }
 
 @keyframes slide {
